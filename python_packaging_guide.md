@@ -90,12 +90,7 @@ Packaging your Python code offers a multitude of benefits:
 By default, only Python files are included in packages. To include additional files:
 
 - **MANIFEST.in**: Specifies files to include using commands like `include`, `recursive-include`, and `global-exclude`.
-- **Legacy Setup.cfg**: The `[options.package_data]` section maps package names to file patterns.
-- **Modern Pyproject.toml**: The `[tool.setuptools.packages.find]` section provides similar functionality with glob patterns.
-
-**Remember**:
-- Folders containing data files must also have an `__init__.py` file for inclusion.
-- Avoid unnecessary bloat to keep package size manageable.
+- **Modern Pyproject.toml**: The `[tool.setuptools.packages-data]` section provides similar functionality with glob patterns.
 
 The `tool.setuptools.package-data` configuration in `pyproject.toml` allows you to specify which non-Python files should be included in your package distribution. This feature is particularly useful for including data files that your package needs to function properly. This option eliminate the need of another config file `MANIFEST.in`
 
@@ -108,6 +103,9 @@ mypkg = ["*.txt", "*.rst"]
 
 This configuration tells setuptools to include all .txt and .rst files found in the mypkg package24. You can specify different file patterns for different packages within your project.
 
+**Remember**:
+- Folders containing data files must also have an `__init__.py` file for inclusion.
+- Avoid unnecessary bloat to keep package size manageable.
 
 ---
 
