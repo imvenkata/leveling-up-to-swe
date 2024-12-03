@@ -202,7 +202,7 @@ def get_weather(city):
 To build the package, run the following command in the root directory of the project:
 
 ```bash
-python -m build
+python -m build --sdit --wheel ./
 ```
 
 This will create a source distribution and a wheel in the `dist` directory.
