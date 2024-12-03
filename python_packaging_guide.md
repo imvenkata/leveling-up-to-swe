@@ -97,6 +97,18 @@ By default, only Python files are included in packages. To include additional fi
 - Folders containing data files must also have an `__init__.py` file for inclusion.
 - Avoid unnecessary bloat to keep package size manageable.
 
+The tool.setuptools.package-data configuration in pyproject.toml allows you to specify which non-Python files should be included in your package distribution. This feature is particularly useful for including data files that your package needs to function properly.
+
+To use tool.setuptools.package-data, add a section to your pyproject.toml file like this:
+
+```
+[tool.setuptools.package-data]
+mypkg = ["*.txt", "*.rst"]
+```
+
+This configuration tells setuptools to include all .txt and .rst files found in the mypkg package24. You can specify different file patterns for different packages within your project.
+
+
 ---
 
 ## Practical Tips and Tools
