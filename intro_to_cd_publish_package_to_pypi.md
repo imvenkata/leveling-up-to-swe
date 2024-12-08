@@ -1,4 +1,4 @@
-## Intro to CD: Publishing Python Packages to PyPI
+# Intro to CD: Publishing Python Packages to PyPI
 
 ## Understanding the Context
 
@@ -10,7 +10,7 @@ Continuous Delivery is a DevOps practice that focuses on making integrated code 
 
 Agile Project Management prioritizes incremental product development, rapid feedback, and frequent delivery of value to the customer. This approach contrasts with the Waterfall Methodology, which follows a linear process with distinct phases.
 
-**Benefits of Agile and Continuous Delivery:**
+#### Benefits of Agile and Continuous Delivery
 
 - Faster validation of ideas through quick deployment of prototypes or MVPs
 - Early course correction based on user feedback
@@ -40,27 +40,33 @@ PyPI (Python Package Index) is a repository for hosting Python packages, making 
 
 ### Publishing Steps
 
-1. **Create Accounts and API Tokens**
-   - Set up accounts on Test PyPI (https://test.pypi.org/) and production PyPI (https://pypi.org/)
-   - Generate API tokens for each account in the account settings
-   - Store these tokens securely (e.g., in a password manager or as environment variables)
+#### Step 1: Create Accounts and API Tokens
 
-2. **Build Your Package**
-   ```bash
-   python -m build --sdist --wheel .
-   ```
+- Set up accounts on Test PyPI (https://test.pypi.org/) and production PyPI (https://pypi.org/).
+- Generate API tokens for each account in the account settings.
+- Store these tokens securely (e.g., in a password manager or as environment variables).
 
-3. **Upload to Test PyPI**
-   ```bash
-   twine upload --repository testpyi dist/*
-   ```
-   When prompted, use `__token__` as the username and paste your Test PyPI API token as the password.
+#### Step 2: Build Your Package
 
-4. **Upload to Production PyPI**
-   After successful testing, repeat the upload process with the production PyPI:
-   ```bash
-   twine upload --repository pypi dist/*
-   ```
+```bash
+python -m build --sdist --wheel .
+```
+
+#### Step 3: Upload to Test PyPI
+
+```bash
+twine upload --repository testpypi dist/*
+```
+
+When prompted, use `__token__` as the username and paste your Test PyPI API token as the password.
+
+#### Step 4: Upload to Production PyPI
+
+After successful testing, repeat the upload process with the production PyPI:
+
+```bash
+twine upload --repository pypi dist/*
+```
 
 ## Automating the Publishing Process
 
@@ -68,12 +74,78 @@ PyPI (Python Package Index) is a repository for hosting Python packages, making 
 
 Task runners help streamline common development tasks. Popular options include:
 
-- Makefile
-- Justfile
-- PyInvoke
-- Bash scripts
+- **Makefile**
+- **Justfile**
+- **PyInvoke**
+- **Bash scripts**
 
-### Creating a Task Runner Script
+## Pros and Cons of Different Task Runners
+
+### Makefile
+
+**Pros:**
+
+- **Portability:** Widely available and pre-installed on many systems.
+- **Industry Standard:** Familiar to many developers.
+- **Dependency Graph Management:** Efficiently manages complex build processes.
+- **Autocompletion:** Good support in many editors.
+
+**Cons:**
+
+- **Complexity and Quirks:** Syntax can be difficult to learn and error-prone.
+- **Limited Scripting Capabilities:** Primarily uses `sh`, making complex logic challenging.
+- **Debugging Challenges:** Combination of Bash and Make syntax can be difficult to debug.
+
+### Justfile
+
+**Pros:**
+
+- **Simplified Syntax:** More user-friendly than Makefile.
+- **Multiple Shells and Languages:** Supports different shells and even Python code.
+- **Dependency Graph Management:** Handles task dependencies well.
+
+**Cons:**
+
+- **Portability:** May require separate installation, reducing portability compared to Makefile.
+
+### PyInvoke
+
+**Pros:**
+
+- **Python-Based:** Easy to understand and extend for Python developers.
+- **Flexibility:** Allows for powerful scripting and complex logic.
+- **Arguments and Default Values:** Supports passing arguments to tasks with default values.
+
+**Cons:**
+
+- **Portability:** Needs separate installation, impacting portability.
+- **Limited Autocompletion:** May not have robust autocompletion support.
+- **Additional Tooling:** Adds another tool for developers to learn.
+
+### Bash Scripts (e.g., run.sh)
+
+**Pros:**
+
+- **Portability:** Bash is widely available on most systems.
+- **Familiarity:** Many developers are comfortable with Bash.
+- **Flexibility:** Powerful scripting environment for complex processes.
+- **Enhanced by Tools:** Tools like GitHub Copilot can assist in writing Bash scripts.
+
+**Cons:**
+
+- **Bash Quirks:** Has its own set of quirks and potential pitfalls.
+- **Lack of Dependency Management:** No built-in mechanisms for managing task dependencies.
+
+## Key Takeaways
+
+- **Portability:** Consider using Makefile or Bash scripts for better portability across systems.
+- **Complexity of the Build Process:** Simple projects may benefit from Bash scripts or Makefiles, while more complex processes might require Justfile or PyInvoke.
+- **Team Familiarity:** Choose a task runner that aligns with your team's experience and preferences.
+- **Security:** Take precautions when using task runners for deployments, avoiding storage of plain text secrets in scripts or Git repositories.
+
+When selecting a task runner, carefully evaluate these pros and cons to make an informed decision that best suits your project needs and workflow.
+
+## Creating a Task Runner Script
 
 Here's an example of a Bash script (`run.sh`) that automates various tasks:
 
@@ -136,15 +208,9 @@ To use this script:
 ## Best Practices and Additional Considerations
 
 1. **Scripted Deployments**: Automate deployments to ensure consistency and reduce errors.
-
 2. **Use CI/CD Tools**: Leverage tools like GitHub Actions for deployments instead of deploying from local machines.
-
 3. **Implement Deployment Gates**: Consider adding approval processes or automated tests before production deployments.
-
 4. **Comprehensive Testing**: Implement thorough tests to validate your code before publishing.
-
 5. **Version Pinning**: Encourage users to pin versions only when necessary to ensure they receive critical updates.
-
 6. **Unique Package Names**: Choose a globally unique name for your package, checking both Test PyPI and production PyPI for availability.
 
-By following these guidelines and best practices, you can effectively publish Python packages to PyPI, automate your workflow, and share your work with the Python community.
